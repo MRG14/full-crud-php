@@ -123,8 +123,15 @@ include 'config/app.php';
                         <?php endif; ?>
 
                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Data Pegawai</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="crud_modal.php" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-user-cog"></i>
                                 <p>Data Akun</p>
                             </a>
                         </li>

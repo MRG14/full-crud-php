@@ -31,7 +31,7 @@ $data_barang = select("SELECT * FROM barang ORDER BY id_barang ASC");
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Barang</h1>
+                    <h1 class="m-0"><i class="fas fa-box"></i> Data Barang</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->

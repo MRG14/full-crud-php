@@ -51,7 +51,7 @@ if (isset($_POST['ubah'])) {
 ?>
 <div class="content-wrapper">
     <div class="container mt-5">
-        <h1><i class="fas fa-user-circle"></i> Data Akun</h1>
+        <h1><i class="fas fa-user-cog"></i> Data Akun</h1>
         <hr>
 
         <?php if($_SESSION['level'] == 1) : ?>
