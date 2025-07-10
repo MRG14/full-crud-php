@@ -73,7 +73,7 @@ include 'config/app.php';
                         <img src="assets-template/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block"><?=  $_SESSION['nama']; ?></a>
                     </div>
                 </div>
 
@@ -94,20 +94,27 @@ include 'config/app.php';
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                         <li class="nav-header">Daftar Menu</li>
+
+                        <?php if($_SESSION['level'] == 1 or $_SESSION['level'] == 2) : ?>
+                            <li class="nav-item">
+                                <a href="index.php" class="nav-link">
+                                    <i class="nav-icon fas fa-box"></i>
+                                    <p>Data Barang</p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if($_SESSION['level'] == 1 or $_SESSION['level'] == 3) : ?>
+                            <li class="nav-item">
+                                <a href="mahasiswa.php" class="nav-link">
+                                    <i class="nav-icon fas fa-user-graduate"></i>
+                                    <p>Data Mahasiswa</p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        
                         <li class="nav-item">
-                            <a href="index.php" class="nav-link">
-                                <i class="nav-icon fas fa-box"></i>
-                                <p>Data Barang</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="mahasiswa.php" class="nav-link">
-                                <i class="nav-icon fas fa-user-graduate"></i>
-                                <p>Data Mahasiswa</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="crud_modal.php" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Data Akun</p>
                             </a>
