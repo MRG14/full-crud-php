@@ -1,0 +1,61 @@
+# menyembunyikan list file/direktori
+Options -indexes
+
+# menyembunyikan signature/tanda server
+ServerSignature Off
+
+# memblokir ip adderss
+Order Allow,Deny
+    Deny from 127.0.0.1
+Allow from all
+
+# Menghilangkan ekstensi file di url
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^(.*)$ $1.php
+</IfModule>
+
+# redirect/mengalihkan ke url lain
+redirect /crud-php/mahasiswa.php https://mubatekno.com
+
+#kompress gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javacript
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javacript
+    AddOutputFilterByType DEFLATE application/x-javasript
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/x-font
+    AddOutputFilterByType DEFLATE application/x-font-truetype
+    AddOutputFilterByType DEFLATE application/x-font-tff
+    AddOutputFilterByType DEFLATE application/x-font-otf
+    AddOutputFilterByType DEFLATE application/x-font-opentype
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/opentype
+    # For Older Browser Which Cant Handle Compression
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+<IfModule mod_gzip.c>
+    mod_gzip_on Yes
+    mod_gzip_dechunk Yes
+    mod_gezip_include file \.(html?|txt|css|js|php|pl)$
+    mod_gezip_include mime ^application/x-javasript.*
+    mod_gezip_include mime ^text/.*
+    mod_gezip_exclude rspheader ^Content-Encoding:.*gzip.*
+    mod_gezip_exclude mime ^image/.*
+    mod_gezip_include handler ^cgi-script$
+</IfModule>
