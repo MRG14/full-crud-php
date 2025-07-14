@@ -5,7 +5,7 @@ if (!isset($_SESSION["login"])) {
             alert('anda diharuskan login terlebih dulu');
             document.location.href = 'login.php';
           </script>";
-    exit;   
+    exit;
 }
 
 $title = 'Detail Mahasiswa';
@@ -19,46 +19,47 @@ $id_mahasiswa = (int)$_GET['id_mahasiswa'];
 $mahasiswa = select("SELECT * FROM mahasiswa WHERE id_mahasiswa = $id_mahasiswa")[0];
 
 ?>
+<div class="content-wrapper">
+    <div class="container mt-5">
+        <h1>Data <?= $mahasiswa['nama_mahasiswa']; ?></h1>
+        <hr>
+        <table class="table table-bordered table-striped mt-3">
+            <tr>
+                <td>Nama</td>
+                <td>: <?= $mahasiswa['nama_mahasiswa'] ?></td>
+            </tr>
+            <tr>
+                <td>Program Studi</td>
+                <td>: <?= $mahasiswa['prodi_mahasiswa'] ?></td>
+            </tr>
+            <tr>
+                <td>Jenis Kelamin</td>
+                <td>: <?= $mahasiswa['jk_mahasiswa'] ?></td>
+            </tr>
+            <tr>
+                <td>Nomor Telepon</td>
+                <td>: <?= $mahasiswa['nomor_telepon'] ?></td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>: <?= $mahasiswa['alamat'] ?></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>: <?= $mahasiswa['email'] ?></td>
+            </tr>
+            <tr>
+                <td width="50%">Foto</td>
+                <td>
+                    <a href="assets/images/<?= $mahasiswa['foto']; ?>">
+                        <img src="assets/images/<?= $mahasiswa['foto']; ?>" alt="foto" style="width: 50%;">
+                    </a>
+                </td>
+            </tr>
+        </table>
 
-<div class="container mt-5">
-    <h1>Data <?= $mahasiswa['nama_mahasiswa']; ?></h1>
-    <hr>
-    <table class="table table-bordered table-striped mt-3">
-        <tr>
-            <td>Nama</td>
-            <td>: <?= $mahasiswa['nama_mahasiswa'] ?></td>
-        </tr>
-        <tr>
-            <td>Program Studi</td>
-            <td>: <?= $mahasiswa['prodi_mahasiswa'] ?></td>
-        </tr>
-        <tr>
-            <td>Jenis Kelamin</td>
-            <td>: <?= $mahasiswa['jk_mahasiswa'] ?></td>
-        </tr>
-        <tr>
-            <td>Nomor Telepon</td>
-            <td>: <?= $mahasiswa['nomor_telepon'] ?></td>
-        </tr>
-        <tr>
-            <td>Alamat</td>
-            <td>: <?= $mahasiswa['alamat'] ?></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>: <?= $mahasiswa['email'] ?></td>
-        </tr>
-        <tr>
-            <td width="50%">Foto</td>
-            <td>
-                <a href="assets/images/<?= $mahasiswa['foto']; ?>">
-                    <img src="assets/images/<?= $mahasiswa['foto']; ?>" alt="foto" style="width: 50%;">
-                </a>
-            </td>
-        </tr>
-    </table>
-
-    <a href="mahasiswa.php" class="btn btn-warning btn-sm" style="float: right;">Kembali</a>
+        <a href="mahasiswa.php" class="btn btn-warning btn-sm" style="float: right;">Kembali</a>
+    </div>
 </div>
 
 <?php include 'layouts/footer.php'; ?>

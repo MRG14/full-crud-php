@@ -28,8 +28,14 @@ if (isset($_POST['filter'])) {
     //quey untuk filter data tanggal
     $data_barang = select("SELECT * FROM barang WHERE tanggal BETWEEN '$tgl_awal' AND '$tgl_akhir' ORDER BY id_barang DESC");
 } else {
-    // query untuk tampil seluruh data
-    $data_barang = select("SELECT * FROM barang ORDER BY id_barang DESC");
+    // query untuk tampil dengan pagination
+    $jumlahDataPerhalaman = 1;
+    $jumlahData = count(select("SELECT * FROM barang"));
+    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+    $halamanAktif = (isset($_GET['halaman']) ? $_GET['halaman'] : 1);
+    $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+
+    $data_barang = select("SELECT * FROM barang ORDER BY id_barang DESC LIMIT $awalData, $jumlahDataPerhalaman");
 }
 
 ?>
@@ -131,7 +137,7 @@ if (isset($_POST['filter'])) {
 
                                     <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modalFilter"><i class="fas fa-filter"></i> Filter Data</button>
 
-                                    <table id="table" class="table table-bordered table-striped" style="margin-bottom: 2px;">
+                                    <table class="table table-bordered table-striped" style="margin-bottom: 2px;">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -145,7 +151,7 @@ if (isset($_POST['filter'])) {
                                         </thead>
                                         <tbody>
                                             <?php $no = 1; ?>
-                                            <?php foreach($data_barang as $barang) : ?>
+                                            <?php foreach ($data_barang as $barang) : ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
                                                     <td><?= $barang['nama_barang']; ?></td>
@@ -163,6 +169,37 @@ if (isset($_POST['filter'])) {
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
+
+                                    <div class="mt-2 justify-content-end d-flex">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <?php if ($halamanAktif > 1) : ?>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?halaman=<?= $halamanAktif - 1 ?>" aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+
+                                                <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+                                                    <?php if ($i == $halamanAktif) : ?>
+                                                        <li class="page-item active"><a class="page-link" href="?halaman=<?= $i; ?>"><?= $i; ?></a></li>
+                                                    <?php else : ?>
+                                                        <li class="page-item"><a class="page-link" href="?halaman=<?= $i; ?>"><?= $i; ?></a></li>
+                                                    <?php endif; ?>
+                                                <?php endfor; ?>
+
+                                                <?php if ($halamanAktif < $jumlahHalaman) : ?>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?halaman=<?= $halamanAktif + 1 ?>" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+                                            </ul>
+                                        </nav>
+                                    </div>
+
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -174,37 +211,40 @@ if (isset($_POST['filter'])) {
                 </div>
                 <!-- /.container-fluid -->
             </section>
-    <!-- /.content -->
-</div>
-
-<!-- Modal Filter -->
-<div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <di class="modal-content">
-        <div class="modal-header bg-success">
-            <h5 class="modal-title" id="exampleModalLabel">Filter Data</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <!-- /.content -->
         </div>
-        <div class="modal-body">
-            <form action="" method="post">
-                <div class="form-group">
-                    <label for="">Tanggal Awal</label>
-                    <input type="date" name="tgl_awal" id="tgl_awal" class="form-control">
-                </div>
 
-                <div class="form-group">
-                    <label for="">Tanggal Akhir</label>
-                    <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control">
-                </div>
+        <!-- Modal Filter -->
+        <div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-success">
+                        <h5 class="modal-title" id="exampleModalLabel">Filter Data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <label for="">Tanggal Awal</label>
+                                <input type="date" name="tgl_awal" id="tgl_awal" class="form-control">
+                            </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success" name="filter">Submit</button>
+                            <div class="form-group">
+                                <label for="">Tanggal Akhir</label>
+                                <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-success" name="filter">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
 <?php include 'layouts/footer.php'; ?>
