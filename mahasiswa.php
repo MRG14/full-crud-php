@@ -56,7 +56,7 @@ $data_mahasiswa = select("SELECT * FROM mahasiswa ORDER BY id_mahasiswa DESC");
 
                                     <a href="download-pdf-mahasiswa.php" class="btn btn-danger mb-1"><i class='fas fa-file-pdf'></i> Download PDF</a>
 
-                                    <table id="example2" class="table table-bordered table-hover">
+                                    <table id="serverside" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -64,27 +64,11 @@ $data_mahasiswa = select("SELECT * FROM mahasiswa ORDER BY id_mahasiswa DESC");
                                                 <th>Prodi</th>
                                                 <th>Jenis Kelamin</th>
                                                 <th>Nomor Telepon</th>
-                                                <th>Email</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $no = 1; ?>
-                                            <?php foreach ($data_mahasiswa as $mahasiswa) : ?>
-                                                <tr>
-                                                    <td><?= $no++; ?></td>
-                                                    <td><?= $mahasiswa['nama_mahasiswa']; ?></td>
-                                                    <td><?= $mahasiswa['prodi_mahasiswa']; ?></td>
-                                                    <td><?= $mahasiswa['jk_mahasiswa']; ?></td>
-                                                    <td><?= $mahasiswa['nomor_telepon']; ?></td>
-                                                    <td><?= $mahasiswa['email']; ?></td>
-                                                    <td width="25%" class="text-center">
-                                                        <a href="form_detail_mahasiswa.php?id_mahasiswa=<?= $mahasiswa['id_mahasiswa']; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i> Detail</a>
-                                                        <a href="form_update_mahasiswa.php?id_mahasiswa=<?= $mahasiswa['id_mahasiswa']; ?>" class="btn btn-success btn-sm"><i class='fas fa-edit'></i> Ubah</a>
-                                                        <a href="form_delete_mahasiswa.php?id_mahasiswa=<?= $mahasiswa['id_mahasiswa']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin data barang akan dihapus?')"><i class='fas fa-trash'></i> Hapus</a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -100,4 +84,6 @@ $data_mahasiswa = select("SELECT * FROM mahasiswa ORDER BY id_mahasiswa DESC");
             </section>
             <!-- /.content -->
         </div>
-        <?php include 'layouts/footer.php'; ?>
+    </section>
+</div>
+<?php include 'layouts/footer.php'; ?>
