@@ -8,29 +8,40 @@ if (isset($_POST['login'])) {
 	$username = mysqli_real_escape_string($db, $_POST['username']);
 	$password = mysqli_real_escape_string($db, $_POST['password']);
 
-	//cek username
-	$result = mysqli_query($db, "SELECT * FROM akun WHERE username = '$username'");
+	//secret key
+	$secret_key = '6Ld4IYMrAAAAAIIKt9tryQQGU_pEYwrJonQ-Jcnd';
+	$verifikasi = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $_POST['g-recaptcha-response']);
+	
+	$response = json_decode($verifikasi);
 
-	//jika user ada
-	if (mysqli_num_rows($result) == 1) {
-		//cek password
-		$hasil = mysqli_fetch_assoc($result);
+	if ($response->success) {
+		//cek username
+		$result = mysqli_query($db, "SELECT * FROM akun WHERE username = '$username'");
 
-		if (password_verify($password, $hasil['password'])) {
-			//set session
-			$_SESSION['login'] = true;
-			$_SESSION['id_akun'] = $hasil['id_akun'];
-			$_SESSION['nama'] = $hasil['nama'];
-			$_SESSION['username'] = $hasil['username'];
-			$_SESSION['email'] = $hasil['email'];
-			$_SESSION['level'] = $hasil['level'];
+		//jika user ada
+		if (mysqli_num_rows($result) == 1) {
+			//cek password
+			$hasil = mysqli_fetch_assoc($result);
 
-			//jika login benar arahkan ke file index
-			header("Location: index.php");
-			exit;
+			if (password_verify($password, $hasil['password'])) {
+				//set session
+				$_SESSION['login'] = true;
+				$_SESSION['id_akun'] = $hasil['id_akun'];
+				$_SESSION['nama'] = $hasil['nama'];
+				$_SESSION['username'] = $hasil['username'];
+				$_SESSION['email'] = $hasil['email'];
+				$_SESSION['level'] = $hasil['level'];
+
+				//jika login benar arahkan ke file index
+				header("Location: index.php");
+				exit;
+			} else {
+				$error = true;
+			}
 		}
+	} else {
+		$errorRecaptcha = true;
 	}
-	$error = true;
 }
 ?>
 
@@ -120,6 +131,12 @@ if (isset($_POST['login'])) {
 				</div>
 			<?php endif; ?>
 
+			<?php if(isset($error)) : ?>
+				<div class="alert alert-danger text-center">
+					<b>Recaptcha Tidak Valid</b>
+				</div>
+			<?php endif; ?>
+
 			<div class="form-floating">
 				<input type="text" name="username" class="form-control" id="floatingInput" placeholder="Username">
 				<label for="floatingInput">Username</label>
@@ -129,6 +146,10 @@ if (isset($_POST['login'])) {
 				<label for="floatingPassword">Password</label>
 			</div>
 
+			<div class="mb-3">
+				<div class="g-recaptcha" data-sitekey="6Ld4IYMrAAAAAL4Z6WOZ7lY2UcHYjxyaeQ2t_ttE"></div>
+			</div>
+
 			<button class="w-100 btn btn-lg btn-primary" type="submit" name="login">Log in</button>
 
 			<p class="mt-5 mb-3 text-muted">&copy; 2017–2025</p>
@@ -136,7 +157,7 @@ if (isset($_POST['login'])) {
 	</main>
 
 
-
+	<script src="https://www.google.com/recaptcha/api.js"></script>
 </body>
 
 </html>
