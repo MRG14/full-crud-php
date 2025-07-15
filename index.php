@@ -29,7 +29,7 @@ if (isset($_POST['filter'])) {
     $data_barang = select("SELECT * FROM barang WHERE tanggal BETWEEN '$tgl_awal' AND '$tgl_akhir' ORDER BY id_barang DESC");
 } else {
     // query untuk tampil dengan pagination
-    $jumlahDataPerhalaman = 1;
+    $jumlahDataPerhalaman = 5;
     $jumlahData = count(select("SELECT * FROM barang"));
     $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
     $halamanAktif = (isset($_GET['halaman']) ? $_GET['halaman'] : 1);
@@ -169,7 +169,7 @@ if (isset($_POST['filter'])) {
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
-
+                                                
                                     <div class="mt-2 justify-content-end d-flex">
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination">

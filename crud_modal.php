@@ -64,6 +64,7 @@ if (isset($_POST['ubah'])) {
         <table class="table table-bordered table-striped" id="table">
             <thead>
                 <tr>
+
                     <th>No</th>
                     <th>Nama</th>
                     <th>Username</th>

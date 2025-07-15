@@ -127,10 +127,15 @@ include 'config/app.php';
                         <li class="nav-item">
                             <a href="pegawai.php" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
-                                <p>Data Pegawai</p>
+                                <p>Data Pegawai (Realtime)</p>
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a href="email.php" class="nav-link">
+                                <i class="nav-icon fas fa-envelope"></i>
+                                <p>Kirim Email (PHPmailer)</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="crud_modal.php" class="nav-link">
                                 <i class="nav-icon fas fa-user-cog"></i>
