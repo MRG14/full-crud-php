@@ -123,7 +123,7 @@ if (isset($_POST['login'])) {
 	<main class="form-signin w-100 m-auto">
 		<form action="" method="post">
 			<img class="mb-4" src="assets/images/bootstrap-logo.svg" alt="" width="72" height="57">
-			<h1 class="h3 mb-3 fw-normal">Admin Login</h1>
+			<h1 class="h3 mb-3 fw-normal">Login</h1>
 
 			<?php if(isset($error)) : ?>
 				<div class="alert alert-danger text-center">
